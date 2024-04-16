@@ -16,7 +16,7 @@ cmd =[
     '-pix_fmt', 'yuv444p',
     "-y", f"{outputFolder}/{name}_face_crop.mp4"
 ]
-```
+######参数解释#####
 <br>
 1.CRF (恒定速率因子): 通过 -crf 参数设置，用于控制输出视频的质量。CRF 值越低，质量越高，文件大小越大。对于 libx264 和 libx265 编码器，CRF 值通常在 18 到 28 之间，其中 18 被认为是视觉上无损的。
 <br>
@@ -39,12 +39,11 @@ rgba: 类似于 rgb24，但增加了一个8位的透明度通道。
 6.帧率 (Frame Rate): -r 参数用于设置视频的帧率。较高的帧率可以使视频播放更加平滑，但会增加文件大小。
 <br>
 7.分辨率 (Resolution): 通过调整输出视频的分辨率，可以直接影响视频的清晰度和文件大小。使用 -s 参数或通过过滤器来调整分辨率。
+```
 
 <br>
 运行python data_gen/utils/process_video/extract_segment_imgs.py --ds_name=nerf --vid_dir=data/raw/videos/${VIDEO_ID}.mp4 # extract image, segmap, and background
 <br>
-发现处理的很慢，根本就无法提取背景，一直显示0%。后来debug下去发现是多进程的时候，会出现队列为空的现象。
-<br>
-由于本人菜鸡，不知道为什么，但是可以绕开这个问题，就取消多进程。处理的方法就是在extract_segment_imgs.py这个文件中，将multiprogrocess_enable 设置为false，即可运行。
+发现处理的很慢，根本就无法提取背景，一直显示0%。后来debug下去发现是多进程的时候，会出现队列为空的现象。由于本人菜鸡，不知道为什么，但是可以绕开这个问题，就取消多进程。处理的方法就是在extract_segment_imgs.py这个文件中，将multiprogrocess_enable 设置为false，即可运行。
 <br>
 还有一点，在计算pid的时候，可能会计算失败，所以直接将cuda_id设置为0或其他。
