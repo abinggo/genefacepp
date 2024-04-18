@@ -42,15 +42,18 @@ rgba: 类似于 rgb24，但增加了一个8位的透明度通道。
 <br>
 7.分辨率 (Resolution): 通过调整输出视频的分辨率，可以直接影响视频的清晰度和文件大小。使用 -s 参数或通过过滤器来调整分辨率。
 
-
+### pr.1
 <br>
 运行python data_gen/utils/process_video/extract_segment_imgs.py --ds_name=nerf --vid_dir=data/raw/videos/${VIDEO_ID}.mp4 # extract image, segmap, and background
 <br>
 发现处理的很慢，根本就无法提取背景，一直显示0%。后来debug下去发现是多进程的时候，会出现队列为空的现象。由于本人菜鸡，不知道为什么，但是可以绕开这个问题，就取消多进程。处理的方法就是在extract_segment_imgs.py这个文件中，将multiprogrocess_enable 设置为false，即可运行。
+
+### pr.2
 <br>
 还有一点，在计算pid的时候，可能会计算失败，所以直接将cuda_id设置为0或其他。
 <br>
 
+### pr.3
 在训练torso的时候报错
 ```
 RuntimeError: Error(s) in loading state_dict for RADNeRFwithSR: size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size([2, 32]) from checkpoint, the shape in current model is torch.Size([4, 32]). size mismatch for blink_encoder.1.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([4]). Terminated
