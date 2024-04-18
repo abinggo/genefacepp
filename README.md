@@ -5,7 +5,8 @@
 <br>
 ffmpeg的一些参数调整
 
-```cmd =[
+```
+cmd =[
     "ffmpeg",
     "-i", frame_pattern,
     "-i", f"{audio_output}/{name}_audio.wav",
@@ -15,7 +16,8 @@ ffmpeg的一些参数调整
     "-framerate", str(targetFps),
     '-pix_fmt', 'yuv444p',
     "-y", f"{outputFolder}/{name}_face_crop.mp4"
-]```
+]
+```
 ######参数解释#####
 1.CRF (恒定速率因子): 通过 -crf 参数设置，用于控制输出视频的质量。CRF 值越低，质量越高，文件大小越大。对于 libx264 和 libx265 编码器，CRF 值通常在 18 到 28 之间，其中 18 被认为是视觉上无损的。
 2.预设 (Preset): -preset 参数用于平衡编码速度和压缩率（从而影响质量和文件大小）。预设值越慢，编码过程越长，但可以获得更好的压缩效率和质量。常见的预设包括 ultrafast, superfast, veryfast, faster, fast, medium（默认值）, slow, slower, 和 veryslow。
@@ -40,7 +42,7 @@ rgba: 类似于 rgb24，但增加了一个8位的透明度通道。
 <br>
 还有一点，在计算pid的时候，可能会计算失败，所以直接将cuda_id设置为0或其他。
 <br>
+
 在训练torso的时候报错
-```
 RuntimeError: Error(s) in loading state_dict for RADNeRFwithSR: size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size([2, 32]) from checkpoint, the shape in current model is torch.Size([4, 32]). size mismatch for blink_encoder.1.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([4]). Terminated
 ```
