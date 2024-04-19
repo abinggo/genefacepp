@@ -59,3 +59,18 @@ rgba: 类似于 rgb24，但增加了一个8位的透明度通道。
 RuntimeError: Error(s) in loading state_dict for RADNeRFwithSR: size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size([2, 32]) from checkpoint, the shape in current model is torch.Size([4, 32]). size mismatch for blink_encoder.1.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([4]). Terminated
 ```
 修改/tasks/radnerfs/radnerf_torso_sr.py 下面的RADNeRFTorsoTask类中的load_ckpt(head_model, hparams['head_model_dir'], strict=False) 将strict改为False
+
+### 推理是的ui界面的几个参数
+
+<br>
+blinkmode 是否眨眼
+<br>
+lle-percent:根据论文第二部分所说的lle参数，值越大说明越趋于大大量训练数据，若设置为0则可能出现异常值，抖动之类的
+<br>
+mouth amplitude：越大嘴巴张开越大
+<br>
+tempearature: 这个本人菜菜，猜测应该是autio转换以后的词向量维度相关的参数
+<br>
+ray marching end-threshold:这个就是加速了
+
+### 再次训练自己的调参记录
