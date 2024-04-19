@@ -1,17 +1,28 @@
 import cv2
 import subprocess
 import dlib
+import os
+import argparse
+args = parser = argparse.ArgumentParser()
+parser.add_argument('--path', type=str,default='')
+opt = parser.parse_args()
 #参数列表
-inputFile = "/home/weiyubin/GeneFacePlusPlus-main/data/raw/videos/shangnan.mp4"
-#最终生成的video的路径
-outputFolder="/home/weiyubin/GeneFacePlusPlus-main/output/video"
+inputFile = opt.path
+#最终生成的video的路径，默认输出在inputfile的上一级文件夹
+outputFolder = os.path.join(inputFile,'../')
+# 通常你会想要规范化路径，消除路径中的 '../'用于识别.
+outputFolder = os.path.normpath(outputFolder)
 #最终生成的视频帧的路径
-outputFamesFolder="/home/weiyubin/GeneFacePlusPlus-main/output/frame"
+outputFamesFolder=os.path.join(outputFolder,'frames')
+if(os.path.exists(outputFamesFolder) == False):
+    os.makedirs(outputFamesFolder)
 #video_name
-name="shangnan"
-#最终裁剪后的视频path
-audio_output="/home/weiyubin/GeneFacePlusPlus-main/output/audio"
-
+name = inputFile.split('/')[-1].split('.')[0]
+#裁剪的音频的输出
+audio_output=os.path.join(outputFolder,'val_wavs')
+if(os.path.exists(audio_output)== False):
+    os.makedirs(audio_output)
+    
 # 初始化dlib的人脸检测器
 detector = dlib.get_frontal_face_detector()
 def get_face_coordinates(image):
