@@ -65,6 +65,7 @@ size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size(
 这个时候调整load_strict=False失败了，理由是匹配上了，但是大小不相同无法用这个解决。解决办法第一个是删除不匹配的层，或者直接跳过，我是采用跳过的
 可以参考博客
 修改/utils/commons/trainer.py 
+
 ```
 for k, v in checkpoint['state_dict'].items():
             if k in ['blink_encoder.1.weight', 'blink_encoder.1.bias']:
@@ -76,6 +77,7 @@ for k, v in checkpoint['state_dict'].items():
                 print(f"| the checkpoint has unmatched keys {k}")
                 
 ```
+<br>
 可以参考链接：
 [网页链接]（https://blog.csdn.net/hxxjxw/article/details/119491163）
 ### pr.4
