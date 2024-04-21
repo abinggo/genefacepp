@@ -56,11 +56,36 @@ rgba: 类似于 rgb24，但增加了一个8位的透明度通道。
 <br>
 
 ### pr.3
+<br>
+在训练head时也报错
+<br>
+```
+size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size(82, 32]) from checkpoint, the shape in current model is torch.Size([4, 32]). size mismatch for blink_encoder.1.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([8]). Terminated
+```
+这个时候调整load_strict=False失败了，理由是匹配上了，但是大小不相同无法用这个解决。解决办法第一个是删除不匹配的层，或者直接跳过，我是采用跳过的
+可以参考博客
+修改/utils/commons/trainer.py 
+```
+for k, v in checkpoint['state_dict'].items():
+            if k in ['blink_encoder.1.weight', 'blink_encoder.1.bias']:
+                print(f"| Skipping loading of {k} due to size mismatch.")
+                continue  # Skip loading this parameter
+            if hasattr(task_ref, k):
+                getattr(task_ref, k).load_state_dict(v, strict=False)
+            else:
+                print(f"| the checkpoint has unmatched keys {k}")
+                
+```
+可以参考链接：
+[网页链接]（https://blog.csdn.net/hxxjxw/article/details/119491163）
+### pr.4
 在训练torso的时候报错
 ```
 RuntimeError: Error(s) in loading state_dict for RADNeRFwithSR: size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size([2, 32]) from checkpoint, the shape in current model is torch.Size([4, 32]). size mismatch for blink_encoder.1.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([4]). Terminated
 ```
 修改/tasks/radnerfs/radnerf_torso_sr.py 下面的RADNeRFTorsoTask类中的load_ckpt(head_model, hparams['head_model_dir'], strict=False) 将strict改为False
+
+
 
 ### 推理是的ui界面的几个参数
 
