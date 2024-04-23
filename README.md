@@ -87,10 +87,10 @@ for k, v in checkpoint['state_dict'].items():
 RuntimeError: Error(s) in loading state_dict for RADNeRFwithSR: size mismatch for blink_encoder.1.weight: copying a param with shape torch.Size([2, 32]) from checkpoint, the shape in current model is torch.Size([4, 32]). size mismatch for blink_encoder.1.bias: copying a param with shape torch.Size([2]) from checkpoint, the shape in current model is torch.Size([4]). Terminated
 ```
 修改/tasks/radnerfs/radnerf_torso_sr.py 下面的RADNeRFTorsoTask类中的load_ckpt(head_model, hparams['head_model_dir'], strict=False) 将strict改为False
-
-
-
-### 推理是的ui界面的几个参数
+ 
+### pr.5
+数据预处理阶段步骤4无法生成3dmm系数文件
+后来发现，是因为自己运行了自己的修改视频的脚本，但是运行结束后还是要运行一边预处理阶段步骤0，不能直接跳过，否则无法生成
 
 <br>
 blinkmode 是否眨眼
