@@ -93,6 +93,9 @@ RuntimeError: Error(s) in loading state_dict for RADNeRFwithSR: size mismatch fo
 数据预处理阶段步骤4无法生成3dmm系数文件
 后来发现，是因为自己运行了自己的修改视频的脚本，但是运行结束后还是要运行一边预处理阶段步骤0，不能直接跳过，否则无法生成
 
+### pr.6
+为什嚒修改了torso的迭代步数为400000步，却依旧在250000停止了呢?
+后来发现torsosr文件没有单独设置maxupdates,但是base下面设置了，所以默认采用base下面的maxupdates,所以可以单独设置一个或者修改base.yaml
 <br>
 blinkmode 是否眨眼
 <br>
