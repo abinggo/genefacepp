@@ -108,3 +108,6 @@ tempearature: 这个本人菜菜，猜测应该是autio转换以后的词向量�
 ray marching end-threshold:这个就是加速了
 
 ### 再次训练自己的调参记录
+补充了两个裁剪和贴回的代码
+第一个crop和对应的compose 它是固定取第一帧为裁剪框
+第二个multicrop和multicompose，以人脸为关键进行特征提取，确保了每次都能截取到人脸，但裁剪出来的视频会抖动
